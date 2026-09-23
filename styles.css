@@ -1,0 +1,52 @@
+/* File Freshness — temporary Explorer highlighting. Never touches file data. */
+
+/* Default indicator: colored dot left of the file name. */
+.nav-file-title[data-path].file-age-fresh::before,
+.nav-file-title[data-path].file-age-recent::before {
+  content: "";
+  box-sizing: border-box;
+  width: 7px;
+  height: 7px;
+  min-width: 7px;
+  border-radius: 50%;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.nav-file-title[data-path].file-age-fresh::before {
+  background: var(--file-freshness-fresh-color);
+}
+
+.nav-file-title[data-path].file-age-recent::before {
+  background: var(--file-freshness-recent-color);
+}
+
+body.freshness-hide-dot .nav-file-title[data-path].file-age-fresh::before,
+body.freshness-hide-dot .nav-file-title[data-path].file-age-recent::before {
+  display: none;
+}
+
+/* Opt-in modes (explicit user choice, may override theme/manual colors). */
+body.freshness-show-text .nav-file-title[data-path].file-age-fresh {
+  color: var(--file-freshness-fresh-color);
+}
+
+body.freshness-show-text .nav-file-title[data-path].file-age-recent {
+  color: var(--file-freshness-recent-color);
+}
+
+body.freshness-show-background .nav-file-title[data-path].file-age-fresh {
+  background-color: var(--file-freshness-fresh-bg);
+}
+
+body.freshness-show-background .nav-file-title[data-path].file-age-recent {
+  background-color: var(--file-freshness-recent-bg);
+}
+
+body.freshness-show-leftbar .nav-file-title[data-path].file-age-fresh {
+  box-shadow: inset 3px 0 0 var(--file-freshness-fresh-color);
+}
+
+body.freshness-show-leftbar .nav-file-title[data-path].file-age-recent {
+  box-shadow: inset 3px 0 0 var(--file-freshness-recent-color);
+}

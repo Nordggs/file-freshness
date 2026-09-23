@@ -1,0 +1,16 @@
+{
+  "name": "file-freshness",
+  "version": "0.2.0",
+  "description": "Obsidian plugin: dynamic highlighting of recently modified files in File Explorer",
+  "scripts": {
+    "build": "tsc --noEmit && node esbuild.config.cjs",
+    "test": "tsc -p tsconfig.json && node --test tests/*.test.cjs",
+    "dev": "node esbuild.config.cjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.21.0",
+    "jsdom": "^25.0.0",
+    "obsidian": "^1.7.0",
+    "typescript": "^5.5.0"
+  }
+}
