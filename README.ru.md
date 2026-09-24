@@ -28,7 +28,7 @@ File Freshness v1 работает в главном окне Obsidian; popout E
 
 Шаги:
 
-1. Скачайте готовый ZIP плагина `file-freshness-v0.2.0.zip`.
+1. Скачайте готовый ZIP плагина `file-freshness-v0.2.1.zip`.
 2. Распакуйте ZIP — получится папка `file-freshness`.
 3. Скопируйте папку `file-freshness` **целиком** в
    `<vault>/.obsidian/plugins/` (где `<vault>` — папка вашего хранилища).

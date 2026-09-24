@@ -142,12 +142,12 @@ export default class FileFreshnessPlugin extends Plugin {
 
   private rebuildCache(): void {
     this.cache.rebuild(
-      this.app.vault.getMarkdownFiles().map((f) => ({ path: f.path, mtime: f.stat.mtime })),
+      this.app.vault.getFiles().map((f) => ({ path: f.path, mtime: f.stat.mtime })),
     );
   }
 
-  private static isMdFile(f: TAbstractFile): f is TFile {
-    return f instanceof TFile && f.extension === "md";
+  private static isTrackableFile(f: TAbstractFile): f is TFile {
+    return f instanceof TFile;
   }
 
   private findRow(path: string): Element | null {
@@ -164,19 +164,19 @@ export default class FileFreshnessPlugin extends Plugin {
 
   private onUpsert(f: TAbstractFile): void {
     if (f instanceof TFolder) return;
-    if (!FileFreshnessPlugin.isMdFile(f)) return;
+    if (!FileFreshnessPlugin.isTrackableFile(f)) return;
     this.cache.set(f.path, f.stat.mtime);
     this.paintRow(f.path);
   }
 
   private onDelete(f: TAbstractFile): void {
     if (f instanceof TFolder) {
-      // Nested .md paths change without per-file events — one rare rebuild.
+      // Nested file paths change without per-file events — one rare rebuild.
       this.rebuildCache();
       this.refreshAll();
       return;
     }
-    if (!FileFreshnessPlugin.isMdFile(f)) return;
+    if (!FileFreshnessPlugin.isTrackableFile(f)) return;
     this.cache.delete(f.path);
     const row = this.findRow(f.path);
     if (row) updateFileElement(row, undefined, this.settings, Date.now());
@@ -188,7 +188,7 @@ export default class FileFreshnessPlugin extends Plugin {
       this.refreshAll();
       return;
     }
-    if (!FileFreshnessPlugin.isMdFile(f)) return;
+    if (!FileFreshnessPlugin.isTrackableFile(f)) return;
     this.cache.rename(oldPath, f.path, f.stat.mtime);
     // The DOM row may be recreated or updated in place — match by new path.
     this.paintRow(f.path);

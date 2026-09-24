@@ -63,7 +63,7 @@ A regular local install does **not** need:
 
 Steps:
 
-1. Download the ready-made plugin ZIP `file-freshness-v0.2.0.zip`.
+1. Download the ready-made plugin ZIP `file-freshness-v0.2.1.zip`.
 2. Unpack the ZIP — you get a `file-freshness` folder.
 3. Copy the `file-freshness` folder **as a whole** to
    `<vault>/.obsidian/plugins/` (where `<vault>` is your vault folder).

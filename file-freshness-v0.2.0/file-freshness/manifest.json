@@ -1,7 +1,7 @@
 {
   "id": "file-freshness",
   "name": "File Freshness",
-  "version": "0.2.1",
+  "version": "0.2.0",
   "minAppVersion": "0.15.0",
   "description": "Highlights recently modified files in File Explorer with a colored dot based on modification time.",
   "author": "AssistPROJECT",

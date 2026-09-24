@@ -106,6 +106,29 @@ test('refreshExplorer paints only .nav-file-title[data-path]', () => {
   assert.equal(unknown.classList.contains(RECENT_CLASS), false);
 });
 
+test('refreshExplorer paints binary files from cache (pdf/xlsx age flow)', () => {
+  const dom = new JSDOM(`<!DOCTYPE html><body>
+    <div class="nav-files-container">
+      <div class="nav-file"><div class="tree-item-self nav-file-title" data-path="Docs/report.pdf">report.pdf</div></div>
+      <div class="nav-file"><div class="tree-item-self nav-file-title" data-path="Docs/budget.xlsx">budget.xlsx</div></div>
+      <div class="nav-file"><div class="tree-item-self nav-file-title" data-path="Docs/old.docx">old.docx</div></div>
+    </div>
+  </body>`);
+  const doc = dom.window.document;
+  const container = doc.querySelector('.nav-files-container');
+  const mtimes = new Map([
+    ['Docs/report.pdf', NOW - 5 * MIN],
+    ['Docs/budget.xlsx', NOW - 100 * MIN],
+    ['Docs/old.docx', NOW - 500 * MIN],
+  ]);
+  refreshExplorer(container, mtimes, DEFAULT_SETTINGS, NOW);
+  assert.equal(doc.querySelector('[data-path="Docs/report.pdf"]').classList.contains(FRESH_CLASS), true);
+  assert.equal(doc.querySelector('[data-path="Docs/budget.xlsx"]').classList.contains(RECENT_CLASS), true);
+  const old = doc.querySelector('[data-path="Docs/old.docx"]');
+  assert.equal(old.classList.contains(FRESH_CLASS), false);
+  assert.equal(old.classList.contains(RECENT_CLASS), false);
+});
+
 test('clearHighlight removes only own classes and is idempotent', () => {
   const doc = makeDoc();
   const container = doc.querySelector('.nav-files-container');
